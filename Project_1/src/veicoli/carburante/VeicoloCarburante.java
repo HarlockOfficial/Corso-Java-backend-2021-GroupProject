@@ -1,6 +1,8 @@
 package veicoli.carburante;
 import veicoli.Veicolo;
 
+import java.util.Objects;
+
 public abstract class VeicoloCarburante extends Veicolo {
     private float carburanteRimanente;
     private String targa;
@@ -29,5 +31,18 @@ public abstract class VeicoloCarburante extends Veicolo {
 
     public void setTarga(String targa) {
         this.targa = targa;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        VeicoloCarburante that = (VeicoloCarburante) o;
+        return Objects.equals(targa, that.targa);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(targa);
     }
 }

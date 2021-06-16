@@ -1,5 +1,5 @@
 package veicoli.carburante.impl;
-import Enumerations.Patente;
+import enumerations.Patente;
 import veicoli.carburante.VeicoloCarburante;
 
 public class MotoScooter extends VeicoloCarburante {
