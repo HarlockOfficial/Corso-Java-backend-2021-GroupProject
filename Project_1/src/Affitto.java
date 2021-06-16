@@ -1,4 +1,3 @@
-package affitto;
 
 import veicoli.Veicolo;
 import java.time.LocalDateTime;
