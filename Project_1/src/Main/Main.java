@@ -1,4 +1,5 @@
 package Main;
+import enumerations.Patente;
 import veicoli.Veicolo;
 import veicoli.carburante.impl.Automobile;
 import veicoli.carburante.impl.Furgoncino;
