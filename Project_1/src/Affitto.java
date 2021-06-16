@@ -13,7 +13,7 @@ public class Affitto {
     private LocalDateTime dataAffitto;
     private int durata;
 
-    public Prova{
+    public Affitto() {
         this.id = counterId++;
         setCliente(cliente);
         setDataAffitto(dataAffitto);
