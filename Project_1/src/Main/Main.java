@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        CompagniaSharedMobility csm = new CompagniaSharedMobility(0, "Viale Regina Margherita");
+        CompagniaSharedMobility csm = new CompagniaSharedMobility("Viale Regina Margherita");
 
         // Aggiungo 7 veicoli alla compagnia
         csm.getVeicoliCompagnia().add(new Automobile("0,0", false,1,"F0920K"));

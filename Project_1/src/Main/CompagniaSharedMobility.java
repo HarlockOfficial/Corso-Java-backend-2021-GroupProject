@@ -7,11 +7,17 @@ import java.util.List;
 
 public class CompagniaSharedMobility
 {
-    private int idSede;
+    private static int idSede=0;
     private String indirizzoSede;
     private ArrayList<Utente> utentiRegistrati;
     private ArrayList<Veicolo> veicoliCompagnia;
     private ArrayList<Affitto> affittiInCorso;
+
+    public CompagniaSharedMobility(String indirizzoSede)
+    {
+        setIdSede(getIdSede()+1);
+        setIndirizzoSede(indirizzoSede);
+    }
 
     /****** GETTERS AND SETTERS ******/
 
@@ -75,6 +81,16 @@ public class CompagniaSharedMobility
      */
     public boolean registrazioneNuovoUtente(Utente user)
     {
+        if(getUtentiRegistrati().isEmpty())
+        {
+            getUtentiRegistrati().add(user);
+            return true;
+        }
+        else if(!getUtentiRegistrati().contains(user))
+        {
+            getUtentiRegistrati().add(user);
+            return true;
+        }
         return false;
     }
 
@@ -87,7 +103,9 @@ public class CompagniaSharedMobility
      */
     public int affittaVeicolo(Veicolo veicolo, Utente user, int durataAffitto)
     {
-        return -1;
+        getAffittiInCorso().add(new Affitto(user,veicolo,durataAffitto));
+        veicolo.setInAffitto(true);
+        return getAffittiInCorso().get(getAffittiInCorso().size()-1).getId();
     }
 
     /*
@@ -97,6 +115,15 @@ public class CompagniaSharedMobility
      */
     public boolean restituisciVeicolo(int idAffitto)
     {
+        for(Affitto affitto:getAffittiInCorso())
+        {
+            if(idAffitto==affitto.getId())
+            {
+                affitto.getVeicoloAffittato().setInAffitto(false);
+                getAffittiInCorso().remove(affitto);
+                return true;
+            }
+        }
         return false;
     }
 
@@ -106,7 +133,10 @@ public class CompagniaSharedMobility
      */
     public List<Veicolo> getVeicoliDisponibili()
     {
-        return new ArrayList<Veicolo>();
+        ArrayList<Veicolo> tmp= new ArrayList<>();
+        for(Veicolo veicolo:getVeicoliCompagnia())
+            if(!veicolo.getInAffitto())tmp.add(veicolo);
+        return tmp;
     }
 
     /*
@@ -121,7 +151,10 @@ public class CompagniaSharedMobility
      */
     public List<Veicolo> getVeicoliDisponibili(Veicolo veicolo)
     {
-        return new ArrayList<Veicolo>();
+        ArrayList<Veicolo> tmp= new ArrayList<>();
+        for(Veicolo mezzo:getVeicoliCompagnia())
+            if(veicolo.getClass().equals(mezzo.getClass()) && !veicolo.getInAffitto())tmp.add(veicolo);
+        return tmp;
     }
 
     /*
@@ -131,7 +164,7 @@ public class CompagniaSharedMobility
      */
     public String getPosizioneVeicolo(Veicolo veicolo)
     {
-        return "";
+        return veicolo.getPosizione();
     }
 
     /*
@@ -143,6 +176,11 @@ public class CompagniaSharedMobility
      */
     public boolean checkIdoneitaAffitto(Utente utente, Veicolo veicolo, int durata)
     {
+        if((checkUtenteRegistrato(utente) && checkIdoneitaPatente(utente,veicolo)) && !veicolo.getInAffitto());
+            if(durata>=5 && veicolo.getTariffaMinuto()*durata<utente.getCredito())
+            {
+                return true;
+            }
         return false;
     }
 
@@ -154,6 +192,10 @@ public class CompagniaSharedMobility
      */
     public boolean checkIdoneitaPatente(Utente utente, Veicolo veicolo)
     {
+        for(Patente patente:utente.getPatenti())
+        {
+            if(patente==veicolo.getPatenteRichiesta())return true;
+        }
         return false;
     }
 
@@ -164,6 +206,7 @@ public class CompagniaSharedMobility
      */
     public boolean checkUtenteRegistrato(Utente utente)
     {
+        if(getUtentiRegistrati().contains(utente))return true;
         return false;
     }
 }
