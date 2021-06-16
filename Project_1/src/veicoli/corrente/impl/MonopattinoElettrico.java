@@ -1,5 +1,5 @@
 package veicoli.corrente.impl;
-import Enumerations.Patente;
+import enumerations.Patente;
 import veicoli.corrente.VeicoloCorrente;
 
 public class MonopattinoElettrico extends VeicoloCorrente {

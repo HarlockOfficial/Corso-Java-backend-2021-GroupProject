@@ -1,5 +1,5 @@
 package veicoli.semplice.impl;
-import Enumerations.Patente;
+import enumerations.Patente;
 import veicoli.semplice.VeicoloSemplice;
 
 public class Bicicletta extends VeicoloSemplice {

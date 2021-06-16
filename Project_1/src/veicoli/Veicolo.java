@@ -1,5 +1,5 @@
 package veicoli;
-import Enumerations.Patente;
+import enumerations.Patente;
 
 public abstract class Veicolo {
     private static int counterId = 0;
