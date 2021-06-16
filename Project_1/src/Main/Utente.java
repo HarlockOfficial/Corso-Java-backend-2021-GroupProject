@@ -3,7 +3,7 @@ import enumerations.Patente;
 import java.util.Objects;
 
 public class Utente  {
-    private static int counterId = 1;
+    private static int counterId = 0;
     private String nome;
     private String cognome;
     private String dataNascita;
@@ -25,10 +25,8 @@ public class Utente  {
     }
 
     public boolean ricaricaCredito(float credito){
-        if(credito < 0) {
-            System.out.println("Inserire un credito non negativo.");
+        if(credito < 0)
             return false;
-        }
         this.credito += credito;
         return true;
     }

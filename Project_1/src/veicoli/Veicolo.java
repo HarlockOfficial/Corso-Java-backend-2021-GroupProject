@@ -1,6 +1,8 @@
 package veicoli;
 import enumerations.Patente;
 
+import java.util.Objects;
+
 public abstract class Veicolo {
     private static int counterId = 0;
     private int id;
@@ -57,5 +59,18 @@ public abstract class Veicolo {
 
     public void setPatenteRichiesta(Patente patenteRichiesta) {
         this.patenteRichiesta = patenteRichiesta;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Veicolo veicolo = (Veicolo) o;
+        return id == veicolo.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

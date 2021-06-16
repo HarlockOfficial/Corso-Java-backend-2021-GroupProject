@@ -14,10 +14,9 @@ public class Affitto {
     private int durata;
 
     public Affitto(Utente cliente,Veicolo veicoloAffittato,int durata) {
-        this.id = counterId++;
-        setId(id);
+        setId(counterId++);
         setCliente(cliente);
-        setDataAffitto(dataAffitto);
+        setDataAffitto();
         setVeicoloAffittato(veicoloAffittato);
     }
 
@@ -50,8 +49,8 @@ public class Affitto {
         return dataAffitto;
     }
 
-    public void setDataAffitto(LocalDateTime dataAffitto) {
-        this.dataAffitto = dataAffitto;
+    public void setDataAffitto() {
+        this.dataAffitto = LocalDateTime.now();
     }
 
     public int getDurata() {
