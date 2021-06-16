@@ -12,11 +12,11 @@ public class Affitto {
     private LocalDateTime dataAffitto;
     private int durata;
 
-    public Affitto() {
+    public Affitto(Utente cliente,Veicolo veicoloAffittato,int durata) {
         this.id = counterId++;
+        setId(id);
         setCliente(cliente);
         setDataAffitto(dataAffitto);
-        setId(id);
         setVeicoloAffittato(veicoloAffittato);
     }
 
