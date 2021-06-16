@@ -1,5 +1,7 @@
 package Main;
 
+import veicoli.Veicolo;
+
 import java.util.ArrayList;
 import java.util.List;
 
