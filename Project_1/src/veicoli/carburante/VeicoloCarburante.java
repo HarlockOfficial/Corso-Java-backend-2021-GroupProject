@@ -32,7 +32,7 @@ public abstract class VeicoloCarburante extends Veicolo {
     public void setTarga(String targa) {
         this.targa = targa;
     }
-    
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
