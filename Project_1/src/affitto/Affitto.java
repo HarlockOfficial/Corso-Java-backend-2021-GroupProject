@@ -1,4 +1,4 @@
-package Affitto;
+package affitto;
 
 import java.time.LocalDateTime;
 //altri import per Veicoli e Utente

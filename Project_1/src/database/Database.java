@@ -1,4 +1,4 @@
-package Database;
+package database;
 
 public interface Database<K> {
     boolean insert(K element);
