@@ -1,19 +1,27 @@
 package affitto;
 
+import veicoli.Veicolo;
 import java.time.LocalDateTime;
-//altri import per Veicoli e Utente
+import java.util.Objects;
 
 public class Affitto {
 
     private static int counterId = 0;
     private int id;
-
     private Utente cliente;
     private Veicolo veicoloAffittato;
     private LocalDateTime dataAffitto;
     private int durata;
 
+    public Prova{
+        this.id = counterId++;
+        setCliente(cliente);
+        setDataAffitto(dataAffitto);
+        setId(id);
+        setVeicoloAffittato(veicoloAffittato);
+    }
 
+    /****** GETTERS AND SETTERS ******/
     public int getId() {
         return id;
     }
@@ -51,18 +59,26 @@ public class Affitto {
     }
 
     public void setDurata(int durata) {
-            this.durata = durata;
+        this.durata = durata;
     }
 
-
-
-    public Prova{
-            this.id = counterId++;
-            setCliente(cliente);
-            setDataAffitto(dataAffitto);
-            setId(id);
-            setVeicoloAffittato(veicoloAffittato);
-        }
+    /****** OVERRIDE EQUALS E HASHCODE ******/
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Affitto affitto = (Affitto) o;
+        return durata == affitto.durata
+                && Objects.equals(cliente, affitto.cliente)
+                && Objects.equals(veicoloAffittato, affitto.veicoloAffittato)
+                && Objects.equals(dataAffitto, affitto.dataAffitto);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cliente, veicoloAffittato, dataAffitto, durata);
+    }
+
+}
 
 
