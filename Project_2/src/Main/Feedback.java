@@ -1,26 +1,29 @@
 package Main;
 
 import java.util.UUID;
+import Exception.InvalidStarsRankingException;
+
 
 public class Feedback {
 
-    private UUID id;
-    private String title;
-    private String text;
-    private int stars;
+    //todo mettere finali
+    private final UUID id;
+    private final String title;
+    private final String text;
+    private  int stars;
 
-    public Feedback(String title, String text, int stars) {
+    public Feedback(String title, String text, int stars, String title1) throws InvalidStarsRankingException {
         id = UUID.randomUUID();
-        setStars(stars);
-        setText(text);
-        setTitle(title);
+        this.title = title;
+        this.text = text;
+        this.stars = stars;
     }
 
-    public Feedback(UUID id,String title, String text, int stars) {
+    public Feedback(UUID id,String title, String text, int stars) throws InvalidStarsRankingException {
        this.id = id;
-        setStars(stars);
-        setText(text);
-        setTitle(title);
+       this.title = title;
+       this.text = text;
+       this.stars = stars;
     }
 
 
@@ -33,23 +36,23 @@ public class Feedback {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public String getText() {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
 
     public int getStars() {
         return stars;
     }
 
-    public void setStars(int stars) {
+    private void setStars(int stars) throws InvalidStarsRankingException{
+        if (stars <0 || stars>5){
+            throw new InvalidStarsRankingException();
+        }
         this.stars = stars;
     }
+
+    //mettere privati
+    //non modificabili
 }

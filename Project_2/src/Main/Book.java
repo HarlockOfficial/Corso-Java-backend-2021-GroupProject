@@ -4,14 +4,13 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 import House;
 import User.User;
-import Exception.InvalidStarsRankingException;
 
 
 public class Book {
 
-    private UUID id;
-    private LocalDateTime checkIn;
-    private LocalDateTime checkOut;
+    private final UUID id;
+    private  LocalDateTime checkIn;
+    private  LocalDateTime checkOut;
     private House house;
     private User user;
     private Feedback feedback;
@@ -20,7 +19,7 @@ public class Book {
         id = UUID.randomUUID();
         setCheckIn(checkIn);
         setCheckOut(checkOut);
-        setFeedback(feedback);
+        this.feedback = feedback;
         setUser(user);
         setHouse(house);
     }
@@ -28,26 +27,15 @@ public class Book {
         this.id = id;
         setCheckIn(checkIn);
         setCheckOut(checkOut);
+        this.feedback = feedback;
+        setUser(user);
+        setHouse(house);
+    }
+
+
+
+    public void addFeedback(Feedback feedback) {
         setFeedback(feedback);
-        setUser(user);
-        setHouse(house);
-    }
-
-    public Book(UUID id,LocalDateTime checkIn, LocalDateTime checkOut, House house, User user) {
-        this.id = id;
-        setCheckIn(checkIn);
-        setCheckOut(checkOut);
-        setUser(user);
-        setHouse(house);
-    }
-
-
-    public void addFeedback(Feedback feedback) throws InvalidStarsRankingException {
-        if (feedback.getStars() <0 || feedback.getStars()>5){
-            throw new InvalidStarsRankingException();
-        }else{
-//aggiungi feedback
-        }
     }
 
 
@@ -91,7 +79,4 @@ public class Book {
         return feedback;
     }
 
-    public void setFeedback(Feedback feedback) {
-        this.feedback = feedback;
-    }
 }
