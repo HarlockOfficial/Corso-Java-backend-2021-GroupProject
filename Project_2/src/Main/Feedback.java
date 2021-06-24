@@ -10,18 +10,23 @@ public class Feedback {
     private int stars;
 
     public Feedback(String title, String text, int stars) {
-        setId(id);
+        id = UUID.randomUUID();
         setStars(stars);
         setText(text);
         setTitle(title);
     }
 
-    public UUID getId() {
-        return id;
+    public Feedback(UUID id,String title, String text, int stars) {
+       this.id = id;
+        setStars(stars);
+        setText(text);
+        setTitle(title);
     }
 
-    public void setId(UUID id) {
-        this.id = UUID.randomUUID();
+
+
+    public UUID getId() {
+        return id;
     }
 
     public String getTitle() {

@@ -2,9 +2,10 @@ package Main;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
-import Main.House;
-import Main.User;
-import Main.Feedback;
+import House;
+import User.User;
+import Exception.InvalidStarsRankingException;
+
 
 public class Book {
 
@@ -16,22 +17,43 @@ public class Book {
     private Feedback feedback;
 
     public Book(LocalDateTime checkIn, LocalDateTime checkOut, House house, User user, Feedback feedback) {
+        id = UUID.randomUUID();
         setCheckIn(checkIn);
         setCheckOut(checkOut);
         setFeedback(feedback);
-        setId(id);
+        setUser(user);
+        setHouse(house);
+    }
+    public Book(UUID id,LocalDateTime checkIn, LocalDateTime checkOut, House house, User user, Feedback feedback) {
+        this.id = id;
+        setCheckIn(checkIn);
+        setCheckOut(checkOut);
+        setFeedback(feedback);
         setUser(user);
         setHouse(house);
     }
 
-    //Getter and Setter
-    public UUID getId() {
-        return id;
+    public Book(UUID id,LocalDateTime checkIn, LocalDateTime checkOut, House house, User user) {
+        this.id = id;
+        setCheckIn(checkIn);
+        setCheckOut(checkOut);
+        setUser(user);
+        setHouse(house);
     }
 
-    public void setId(UUID id) {
-        this.id = UUID.randomUUID();
+
+    public void addFeedback(Feedback feedback) throws InvalidStarsRankingException {
+        if (feedback.getStars() <0 || feedback.getStars()>5){
+            throw new InvalidStarsRankingException();
+        }else{
+//aggiungi feedback
+        }
     }
+
+
+
+    //Getter and Setter
+    public UUID getId() { return id; }
 
     public LocalDateTime getCheckIn() {
         return checkIn;
