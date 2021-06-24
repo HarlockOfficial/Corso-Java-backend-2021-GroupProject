@@ -1,9 +1,7 @@
 package Main;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.time.ZonedDateTime;
+import java.util.*;
 
 import Exception.InvalidHostException;
 import Exception.InvalidUserException;
@@ -27,12 +25,41 @@ public class AirBnB {
         }
         return airBnb;
     }
-    public boolean addUser(User user) throws InvalidUserException{
-        if(user == null){
-            throw new InvalidUserException();
+
+    public Set<House> getHostHouses(UUID uuid) throws InvalidHostException {
+        for(User u: allHosts){
+            if(u.getUUID().equals(uuid)){
+                return u.getHouses().getKeySet();
+            }
         }
-        allHosts.add((Host) user);
-        return allUsers.add(user);
+        throw new InvalidHostException();
+    }
+    public Book getLastBook(UUID uuid) throws BookNotFoundException{
+        for(User u: allUsers){
+            if(u.getUUID().equals(uuid)){
+                List<Book> lst = u.getBookings();
+                return lst.get(lst.size()-1);
+            }
+        }
+        throw new BookNotFoundException();
+    }
+    public House getMostBookedThisMonth(){
+        House out = null;
+        int mostBooked = 0;
+        for(Host h: allHosts){
+            SortedMap<House, SortedSet<Book>> map = h.getBooks();
+            for(House house: map.getKeySet()){
+                List<Book> tmp = map.get(house).stream().toList();
+                if(mostBooked<map.get(house).size() && tmp.get(tmp.size()-1).getCheckIn().isAfter(ZonedDateTime.now().minusMonths(1))){
+                    out = house;
+                    mostBooked = map.get(house).size();
+                }
+            }
+        }
+        return out;
+    }
+    public Host getHostOfTheMonth(){
+        //TODO implement method stub
     }
     public Set<Host> getSuperHost(){
         Set<Host> out = new HashSet<>();
@@ -42,6 +69,32 @@ public class AirBnB {
             }
         }
         return out;
+    }
+    public Set<User> getBestUsers(){
+        //TODO implement method stub (return only five best users)
+    }
+    public double getAverageBeds(){
+        int bedQuantity = 0, houseQuantity = 0;
+        for(Host h: allHosts){
+            for(House house: h.getBooks().getKeySet()){
+                bedQuantity += house.getNbeds();
+                ++houseQuantity;
+            }
+        }
+        return ((double)bedQuantity)/((double)houseQuantity);
+    }
+    public boolean addUser(User user) throws InvalidUserException{
+        if(user == null){
+            throw new InvalidUserException();
+        }
+        allHosts.add((Host) user);
+        return allUsers.add(user);
+    }
+    public boolean deleteUser(User user){
+        if(user instanceof Host){
+            allHosts.remove(user);
+        }
+        return allUsers.remove(user);
     }
     public boolean addHouse(House house, Host host) throws InvalidHostException {
         if(!allHosts.contains(host)){
@@ -54,17 +107,22 @@ public class AirBnB {
         }
         return false;
     }
-    public boolean deleteUser(User user){
-        if(user instanceof Host){
-            allHosts.remove(user);
+    public boolean deleteHouse(House house, Host host) throws InvalidHostException {
+        if(!allHosts.contains(host)){
+            throw new InvalidHostException();
         }
-        return allUsers.remove(user);
+        for(Host h: allHosts){
+            if(host.equals(h)){
+                return h.removeHouse(house);
+            }
+        }
+        return false;
     }
     public User changeUAC(User user, Class<? extends User> Class) throws ImpossibleException{
         if(!user.getClass().equals(Class)){
             try {
                 User newUser = Class.getConstructor(UUID.class, String.class, String.class, String.class)
-                        .newInstance(user.getUUID(), user.getName(), user.getSurname(), user.getMail());
+                        .newInstance(user.getUUID(), user.getName(), user.getSurname(), user.getEmail());
                 deleteUser(user);
                 addUser(newUser);
             }catch(NoSuchMethodException ex){
@@ -75,23 +133,5 @@ public class AirBnB {
             }
         }
         return user;
-    }
-    //
-    public Book getLastBook(UUID uuid) throws BookNotFoundException{
-        for(User u: allUsers){
-            if(u.getUUID().equals(uuid)){
-                List<Book> lst = u.getBookings();
-                return lst.get(lst.size()-1);
-            }
-        }
-        throw new BookNotFoundException();
-    }
-    public House getMostBooked(){
-        House out = null;
-        int mostBooked = 0;
-        for(Host h: allHosts){
-            SortedMap<House, SortedSet<Books>> map = h.getBooks();
-            //TODO finish, get most booked house (should be the first), then check with most booked
-        }
     }
 }
