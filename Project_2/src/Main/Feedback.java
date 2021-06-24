@@ -1,5 +1,6 @@
 package Main;
 
+import java.awt.*;
 import java.util.Objects;
 import java.util.UUID;
 import Exception.InvalidStarsRankingException;
@@ -57,6 +58,18 @@ public class Feedback implements Comparable<Feedback>{
     public int compareTo(Feedback f) {
         return id.compareTo(f.getId());
     }
+
+
+    @Override
+    public String toString(){
+        return "Feedback{" +
+                "id=" + id +
+                ", titolo='" + title + '\'' +
+                ", testo='" + text + '\'' +
+                ", stelle ='" + stars + '\'' +
+                '}';
+    }
+
 
     @Override
     public boolean equals(Object o) {
