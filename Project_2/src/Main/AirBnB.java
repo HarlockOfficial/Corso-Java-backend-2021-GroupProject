@@ -27,9 +27,9 @@ public class AirBnB {
     }
 
     public Set<House> getHostHouses(UUID uuid) throws InvalidHostException {
-        for(User u: allHosts){
+        for(Host u: allHosts){
             if(u.getUUID().equals(uuid)){
-                return u.getHouses().getKeySet();
+                return new HashSet<>(u.getHouses());
             }
         }
         throw new InvalidHostException();
@@ -71,6 +71,9 @@ public class AirBnB {
         return out;
     }
     public Set<User> getBestUsers(){
+        for(User u: allUsers){
+
+        }
         //TODO implement method stub (return only five best users)
     }
     public double getAverageBeds(){
@@ -133,5 +136,16 @@ public class AirBnB {
             }
         }
         return user;
+    }
+    public void addFeedback(Book book, Feedback feedback){
+        for(Host h: allHosts){
+            for(SortedSet<Book> entry: h.getBooks().values()){
+                for(Book b: entry){
+                    if(book.equals(b)){
+                        b.addFeedback(feedback);
+                    }
+                }
+            }
+        }
     }
 }
