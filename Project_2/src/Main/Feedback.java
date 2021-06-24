@@ -1,17 +1,19 @@
-package Project_2.Main;
+package Main;
 
-public class FeedBack{
+import java.util.UUID;
+
+public class Feedback {
 
     private UUID id;
     private String title;
     private String text;
     private int stars;
 
-    public FeedBack(UUID id, String title, String text, int stars) {
-        this.id = id;
-        this.title = title;
-        this.text = text;
-        this.stars = stars;
+    public Feedback(String title, String text, int stars) {
+        setId(id);
+        setStars(stars);
+        setText(text);
+        setTitle(title);
     }
 
     public UUID getId() {
@@ -19,7 +21,7 @@ public class FeedBack{
     }
 
     public void setId(UUID id) {
-        this.id = id.randomUUID();
+        this.id = UUID.randomUUID();
     }
 
     public String getTitle() {
