@@ -47,7 +47,7 @@ public class Book implements Comparable<Book> {
 
 
     //Getter and Setter
-    public UUID getId() { return id; }
+    public UUID getUUID() { return id; }
 
     public ZonedDateTime getCheckIn() {
         return checkIn;
@@ -102,7 +102,7 @@ public class Book implements Comparable<Book> {
                 ", check in='" + checkIn + '\'' +
                 ", check out='" + checkOut + '\'' +
                 ", nome utente prenotazione ='" + user.getName() + '\'' +
-               ", id utente prenotazione ='" + user.getId() + '\'' +
+               ", id utente prenotazione ='" + user.getUUID() + '\'' +
                ", titolo feedback ='" + feedback.getTitle() + '\'' +
                 '}';
     }
@@ -115,7 +115,7 @@ public class Book implements Comparable<Book> {
 
     @Override
     public int compareTo(Book b) {
-        return id.compareTo(b.getId());
+        return id.compareTo(b.getUUID());
     }
 
 }

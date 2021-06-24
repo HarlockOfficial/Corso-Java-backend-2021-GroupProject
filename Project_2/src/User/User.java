@@ -16,6 +16,7 @@ import Main.House;
 public class User implements Comparable<User> {
     private final UUID id;
     private final String name;
+
     private final String surname;
     private String email;
     private List<Book> books;
@@ -54,7 +55,7 @@ public class User implements Comparable<User> {
         books = new ArrayList<>();
     }
 
-    public UUID getId() {
+    public UUID getUUID() {
         return id;
     }
 
@@ -70,13 +71,21 @@ public class User implements Comparable<User> {
         return email;
     }
 
+    public List<Book> getBookingList() {
+        return books;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
 
     public Book book(House house, ZonedDateTime startDate, ZonedDateTime endDate) throws InvalidPeriodException {
         if(startDate.isAfter(endDate)) throw new InvalidPeriodException();
-       else return new Book(startDate, endDate, house);
+       else {
+           Book actualBook = new Book(startDate, endDate, house);
+           books.add(actualBook);
+           return actualBook;
+        }
 
     }
 

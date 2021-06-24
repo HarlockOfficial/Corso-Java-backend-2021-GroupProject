@@ -60,10 +60,10 @@ public class Host extends User{
         this.books = books;
     }
 
-    public void addHouse(House house){
+    /*public void addHouse(House house){
         TreeSet<Book> booksLocal = new TreeSet<>();
         books.put(house, booksLocal);
-    }
+    }*/
 
     public List<House> getHouses(){
         List<House> houses = new ArrayList<>(books.keySet());
