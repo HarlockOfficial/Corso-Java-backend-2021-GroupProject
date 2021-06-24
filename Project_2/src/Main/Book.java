@@ -1,12 +1,13 @@
 package Main;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 import House;
 import User.User;
 
 
-public class Book {
+public class Book implements Comparable<Book> {
 
     private final UUID id;
     private  LocalDateTime checkIn;
@@ -32,10 +33,17 @@ public class Book {
         setHouse(house);
     }
 
+    public Book(LocalDateTime checkIn, LocalDateTime checkOut, House house) {
+        id = UUID.randomUUID();
+        setCheckIn(checkIn);
+        setCheckOut(checkOut);
+        setHouse(house);
+        feedback = null;
+    }
 
 
     public void addFeedback(Feedback feedback) {
-        setFeedback(feedback);
+        this.feedback = feedback;
     }
 
 
@@ -77,6 +85,25 @@ public class Book {
 
     public Feedback getFeedback() {
         return feedback;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return Objects.equals(id, book.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public int compareTo(Book b) {
+        return id.compareTo(b.getId());
     }
 
 }

@@ -2,11 +2,11 @@ package Main;
 
 import java.util.UUID;
 import Exception.InvalidStarsRankingException;
+import User.User;
 
 
 public class Feedback {
 
-    //todo mettere finali
     private final UUID id;
     private final String title;
     private final String text;
@@ -52,7 +52,4 @@ public class Feedback {
         }
         this.stars = stars;
     }
-
-    //mettere privati
-    //non modificabili
 }
