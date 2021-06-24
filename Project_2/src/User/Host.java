@@ -35,7 +35,7 @@ public class Host extends User{
 
     }
 
-    public Host(UUID id, String name, String surname, String email todo , SortedMap<House, SOrtedSet<Book>> books){
+    public Host(UUID id, String name, String surname, String email, SortedMap<House, SortedSet<Book>> books){
         super(id, name, surname, email);
         this.books = books;
         setSuperhost();

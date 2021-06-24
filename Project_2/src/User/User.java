@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import Exception.InvalidPeriodException;
+import Main.House;
 
 public class User implements Comparable<User> {
     private final UUID id;
@@ -75,7 +76,7 @@ public class User implements Comparable<User> {
 
     public Book book(House house, ZonedDateTime startDate, ZonedDateTime endDate) throws InvalidPeriodException {
         if(startDate.isAfter(endDate)) throw new InvalidPeriodException();
-       else Book actualBook = new Book(startDate, endDate, house);
+       else return new Book(startDate, endDate, house);
 
     }
 
