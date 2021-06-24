@@ -1,5 +1,6 @@
 package Main;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.ZonedDateTime;
 import java.util.*;
 
@@ -37,7 +38,7 @@ public class AirBnB {
     public Book getLastBook(UUID uuid) throws BookNotFoundException{
         for(User u: allUsers){
             if(u.getUUID().equals(uuid)){
-                List<Book> lst = u.getBookings();
+                List<Book> lst = u.getBookingList();
                 return lst.get(lst.size()-1);
             }
         }
@@ -48,7 +49,7 @@ public class AirBnB {
         int mostBooked = 0;
         for(Host h: allHosts){
             SortedMap<House, SortedSet<Book>> map = h.getBooks();
-            for(House house: map.getKeySet()){
+            for(House house: map.keySet()){
                 List<Book> tmp = map.get(house).stream().toList();
                 if(mostBooked<map.get(house).size() && tmp.get(tmp.size()-1).getCheckIn().isAfter(ZonedDateTime.now().minusMonths(1))){
                     out = house;
@@ -59,7 +60,23 @@ public class AirBnB {
         return out;
     }
     public Host getHostOfTheMonth(){
-        //TODO implement method stub
+        int bookedQuantity = 0;
+        Host out = null;
+        for(Host h: allHosts){
+            int currBook = 0;
+            for(Set<Book> books : h.getBooks().values()){
+                for(Book b: books){
+                    if(b.getCheckIn().isAfter(ZonedDateTime.now().minusMonths(1))){
+                        ++currBook;
+                    }
+                }
+            }
+            if(currBook>bookedQuantity){
+                bookedQuantity = currBook;
+                out = h;
+            }
+        }
+        return out;
     }
     public Set<Host> getSuperHost(){
         Set<Host> out = new HashSet<>();
@@ -71,15 +88,34 @@ public class AirBnB {
         return out;
     }
     public Set<User> getBestUsers(){
+        SortedMap<Integer, List<User>> bestUsers = new TreeMap<>(Comparator.reverseOrder());
         for(User u: allUsers){
-
+            int size = u.getBookingList().size();
+            List<User> tmp = new ArrayList<>();
+            if(bestUsers.containsKey(size)){
+                tmp = bestUsers.get(size);
+            }
+            tmp.add(u);
+            bestUsers.put(size, tmp);
         }
-        //TODO implement method stub (return only five best users)
+        Set<User> out = new HashSet<>();
+        int userCount = 0;
+        for(List<User> lst: bestUsers.values()){
+            for(User u: lst){
+                if(out.add(u)){
+                    ++userCount;
+                }
+                if(userCount>=5){
+                    return out;
+                }
+            }
+        }
+        return out;
     }
     public double getAverageBeds(){
         int bedQuantity = 0, houseQuantity = 0;
         for(Host h: allHosts){
-            for(House house: h.getBooks().getKeySet()){
+            for(House house: h.getBooks().keySet()){
                 bedQuantity += house.getNbeds();
                 ++houseQuantity;
             }
@@ -128,7 +164,7 @@ public class AirBnB {
                         .newInstance(user.getUUID(), user.getName(), user.getSurname(), user.getEmail());
                 deleteUser(user);
                 addUser(newUser);
-            }catch(NoSuchMethodException ex){
+            }catch(NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException ex){
                 return user;
             }catch (InvalidUserException ex){
                 //impossible
