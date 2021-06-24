@@ -3,7 +3,6 @@ package Main;
 import java.util.Objects;
 import java.util.UUID;
 import Exception.InvalidStarsRankingException;
-import User.User;
 
 
 public class Feedback implements Comparable<Feedback>{
@@ -13,7 +12,7 @@ public class Feedback implements Comparable<Feedback>{
     private final String text;
     private  int stars;
 
-    public Feedback(String title, String text, int stars, String title1) throws InvalidStarsRankingException {
+    public Feedback(String title, String text, int stars) throws InvalidStarsRankingException {
         id = UUID.randomUUID();
         this.title = title;
         this.text = text;
