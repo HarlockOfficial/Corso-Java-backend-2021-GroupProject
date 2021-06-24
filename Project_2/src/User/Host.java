@@ -1,72 +1,78 @@
 package User;
 
-import java.util.SortedSet;
-import java.util.UUID;
+import Main.Book;
+import Main.House;
+
+import java.util.*;
 
 public class Host extends User{
     private boolean isSuperhost;
-    // @todo private SortedMap<House, SortedSet<Book>> books;
-    // @todo private List<House> houses;
+    private SortedMap<House, SortedSet<Book>> books;
 
     //se non viene dato nessun altro parametro viene considerato NON superhost e viene creata la mappa delle prenotazioni
     public Host(UUID id, String name, String surname, String email) {
         super(id, name, surname, email);
         isSuperhost = false;
-        //@todo books = new SortedMap<>();
+        books = new TreeMap<House, SortedSet<Book>>();
     }
 
     public Host(String name, String surname, String email){
         super(name, surname, email);
         isSuperhost = false;
-        //@todo books = new SortedMap<>();
+        books = new TreeMap<>();
     }
 
     public Host(String name, String surname){
         super(name, surname);
         isSuperhost = false;
-        //@todo books = new SortedMap<>();
+        books = new TreeMap<>();
     }
 
-    public Host(UUID id, String name, String surname, boolean isSuperhost/* todo , SortedMap<House, SOrtedSet<Book>> books*/){
+    public Host(UUID id, String name, String surname, SortedMap<House, SortedSet<Book>> books){
         super(id, name, surname);
-        setSuperhost(isSuperhost);
-        // @todo this.books = books;
+        this.books = books;
+        setSuperhost();
 
     }
 
-    public Host(UUID id, String name, String surname/* todo , SortedMap<House, SOrtedSet<Book>> books*/){
-        super(id, name, surname);
-        // @todo this.books = books;
-        //@todo stabilire se è superhost a seconda di quante sono le prenotazioni
-
-    }
-
-    public Host(UUID id, String name, String surname, String email, boolean isSuperhost/* todo , SortedMap<House, SOrtedSet<Book>> books*/){
-        super(id, name, surname, email);
-        setSuperhost(isSuperhost);
-        //@todo this.books = books;
-    }
-    /*
     public Host(UUID id, String name, String surname, String email todo , SortedMap<House, SOrtedSet<Book>> books){
         super(id, name, surname, email);
-        @todo this.books = books;
-        stabilire se è superhost a seconda di quante sono le prenotazioni
+        this.books = books;
+        setSuperhost();
 
 
-    }*/
-
-    public void setSuperhost(boolean superhost) {
-        isSuperhost = superhost;
     }
 
-    /* @todo public SortedMap<House, SortedSet<Book>> getBooks() {
+    private void setSuperhost(){
+        if (books.size() > 100) isSuperhost = true;
+        else isSuperhost = false;
+    }
+
+    public boolean isSuperhost(){
+        return isSuperhost;
+    }
+
+    public SortedMap<House, SortedSet<Book>> getBooks() {
         return books;
     }
 
     public void setBooks(SortedMap<House, SortedSet<Book>> books) {
         this.books = books;
-    }*/
+    }
 
+    public void addHouse(House house){
+        TreeSet<Book> booksLocal = new TreeSet<>();
+        books.put(house, booksLocal);
+    }
+
+    public List<House> getHouses(){
+        List<House> houses = new ArrayList<>(books.keySet());
+        return houses;
+    }
+
+    public SortedMap<House, SortedSet<Book>> getBooks(){
+        return books;
+    }
 
     @Override
     public String toString() {
@@ -76,7 +82,4 @@ public class Host extends User{
                 '}';
     }
 
-    public void addHouse(){
-
-    }
 }

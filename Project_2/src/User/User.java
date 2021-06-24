@@ -1,13 +1,23 @@
 package User;
 
+import Main.Book;
+
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import Exception.InvalidPeriodException;
 
 public class User implements Comparable<User> {
     private final UUID id;
     private final String name;
     private final String surname;
     private String email;
+    private List<Book> books;
 
 
     public User(UUID id, String name, String surname, String email) {
@@ -15,6 +25,7 @@ public class User implements Comparable<User> {
         this.name = name;
         this.surname = surname;
         setEmail(email);
+        books = new ArrayList<>();
     }
 
     //overriding costruttore senza mail (mail viene inizializzata a stringa nulla)
@@ -23,6 +34,7 @@ public class User implements Comparable<User> {
         this.name = name;
         this.surname = surname;
         setEmail("");
+        books = new ArrayList<>();
     }
 
     public User(String name, String surname, String email){
@@ -30,6 +42,7 @@ public class User implements Comparable<User> {
         this.name = name;
         this.surname = surname;
         setEmail(email);
+        books = new ArrayList<>();
     }
 
     public User(String name, String surname){
@@ -37,6 +50,7 @@ public class User implements Comparable<User> {
         this.name = name;
         this.surname = surname;
         setEmail("");
+        books = new ArrayList<>();
     }
 
     public UUID getId() {
@@ -57,6 +71,12 @@ public class User implements Comparable<User> {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Book book(House house, ZonedDateTime startDate, ZonedDateTime endDate) throws InvalidPeriodException {
+        if(startDate.isAfter(endDate)) throw new InvalidPeriodException();
+       else Book actualBook = new Book(startDate, endDate, house);
+
     }
 
     @Override
