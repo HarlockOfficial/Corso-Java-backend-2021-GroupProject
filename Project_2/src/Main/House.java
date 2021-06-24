@@ -41,11 +41,13 @@ public int getNbeds() {
 public int getnFloors() {
 	  return nFloors;
 }
-
+	
+//Getter and Setter
 public double getPrice() {
 	return price;
 }
 
+//Getter and Setter	
 public Period getAvailability() {
 	return availability;
 }
