@@ -1,11 +1,12 @@
 package Main;
 
+import java.util.Objects;
 import java.util.UUID;
 import Exception.InvalidStarsRankingException;
 import User.User;
 
 
-public class Feedback {
+public class Feedback implements Comparable<Feedback>{
 
     private final UUID id;
     private final String title;
@@ -51,5 +52,23 @@ public class Feedback {
             throw new InvalidStarsRankingException();
         }
         this.stars = stars;
+    }
+
+    @Override
+    public int compareTo(Feedback f) {
+        return id.compareTo(f.getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Feedback feedback = (Feedback) o;
+        return Objects.equals(id, feedback.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

@@ -1,6 +1,6 @@
 package Main;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.UUID;
 import House;
@@ -10,13 +10,13 @@ import User.User;
 public class Book implements Comparable<Book> {
 
     private final UUID id;
-    private  LocalDateTime checkIn;
-    private  LocalDateTime checkOut;
+    private ZonedDateTime checkIn;
+    private  ZonedDateTime checkOut;
     private House house;
     private User user;
     private Feedback feedback;
 
-    public Book(LocalDateTime checkIn, LocalDateTime checkOut, House house, User user, Feedback feedback) {
+    public Book(ZonedDateTime checkIn, ZonedDateTime checkOut, House house, User user, Feedback feedback) {
         id = UUID.randomUUID();
         setCheckIn(checkIn);
         setCheckOut(checkOut);
@@ -24,7 +24,7 @@ public class Book implements Comparable<Book> {
         setUser(user);
         setHouse(house);
     }
-    public Book(UUID id,LocalDateTime checkIn, LocalDateTime checkOut, House house, User user, Feedback feedback) {
+    public Book(UUID id,ZonedDateTime checkIn, ZonedDateTime checkOut, House house, User user, Feedback feedback) {
         this.id = id;
         setCheckIn(checkIn);
         setCheckOut(checkOut);
@@ -33,7 +33,7 @@ public class Book implements Comparable<Book> {
         setHouse(house);
     }
 
-    public Book(LocalDateTime checkIn, LocalDateTime checkOut, House house) {
+    public Book(ZonedDateTime checkIn, ZonedDateTime checkOut, House house) {
         id = UUID.randomUUID();
         setCheckIn(checkIn);
         setCheckOut(checkOut);
@@ -47,23 +47,22 @@ public class Book implements Comparable<Book> {
     }
 
 
-
     //Getter and Setter
     public UUID getId() { return id; }
 
-    public LocalDateTime getCheckIn() {
+    public ZonedDateTime getCheckIn() {
         return checkIn;
     }
 
-    public void setCheckIn(LocalDateTime checkIn) {
+    public void setCheckIn(ZonedDateTime checkIn) {
         this.checkIn = checkIn;
     }
 
-    public LocalDateTime getCheckOut() {
+    public ZonedDateTime getCheckOut() {
         return checkOut;
     }
 
-    public void setCheckOut(LocalDateTime checkOut) {
+    public void setCheckOut(ZonedDateTime checkOut) {
         this.checkOut = checkOut;
     }
 
@@ -95,6 +94,20 @@ public class Book implements Comparable<Book> {
         Book book = (Book) o;
         return Objects.equals(id, book.id);
     }
+
+
+    @Override
+    public String toString(){
+       return "Prenotazione{" +
+                "id=" + id +
+                ", check in='" + checkIn + '\'' +
+                ", check out='" + checkOut + '\'' +
+                ", nome utente prenotazione ='" + user.getName() + '\'' +
+               ", id utente prenotazione ='" + user.getId() + '\'' +
+               ", titolo feedback ='" + feedback.getTitle() + '\'' +
+                '}';
+    }
+
 
     @Override
     public int hashCode() {
