@@ -70,10 +70,6 @@ public class Host extends User{
         return houses;
     }
 
-    public SortedMap<House, SortedSet<Book>> getBooks(){
-        return books;
-    }
-
     @Override
     public String toString() {
         return "Host{" +
