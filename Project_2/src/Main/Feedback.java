@@ -1,6 +1,5 @@
 package Main;
 
-import java.awt.*;
 import java.util.Objects;
 import java.util.UUID;
 import Exception.InvalidStarsRankingException;

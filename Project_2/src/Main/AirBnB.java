@@ -18,6 +18,7 @@ public class AirBnB {
     private final Set<User> allUsers;
     private final Set<Host> allHosts;
     private static AirBnB airBnb = null;
+
     private AirBnB(){
         allUsers = new HashSet<>();
         allHosts = new HashSet<>();
@@ -134,12 +135,17 @@ public class AirBnB {
         }
         return allUsers.add(user);
     }
-    public boolean deleteUser(User user){
+
+    public boolean deleteUser(User user) throws InvalidUserException {
+        if(user == null){
+            throw new InvalidUserException();
+        }
         if(user instanceof Host){
             allHosts.remove(user);
         }
         return allUsers.remove(user);
     }
+
     public boolean addHouse(House house, Host host) throws InvalidHostException {
         if(!allHosts.contains(host)){
             throw new InvalidHostException();
@@ -151,6 +157,7 @@ public class AirBnB {
         }
         return false;
     }
+
     public boolean deleteHouse(House house, Host host) throws InvalidHostException {
         if(!allHosts.contains(host)){
             throw new InvalidHostException();
@@ -162,6 +169,7 @@ public class AirBnB {
         }
         return false;
     }
+
     public User changeUAC(User user, Class<? extends User> Class) throws ImpossibleException{
         if(!user.getClass().equals(Class)){
             try {
@@ -178,6 +186,7 @@ public class AirBnB {
         }
         return user;
     }
+
     public void addFeedback(Book book, Feedback feedback){
         for(Host h: allHosts){
             for(SortedSet<Book> entry: h.getBooks().values()){

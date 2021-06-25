@@ -12,6 +12,7 @@ import java.util.Objects;
 import java.util.UUID;
 import Exception.InvalidPeriodException;
 import Main.House;
+import Exception.DateNotAvailableException;
 
 public class User implements Comparable<User> {
     private final UUID id;
@@ -83,7 +84,14 @@ public class User implements Comparable<User> {
         if(startDate.isAfter(endDate)) throw new InvalidPeriodException();
        else {
            Book actualBook = new Book(this, startDate, endDate, house);
-           books.add(actualBook);
+           Period periodAvailability = Period.between(startDate.toLocalDate(), endDate.toLocalDate());
+           try {
+               house.addSlot(startDate, periodAvailability);
+               books.add(actualBook);
+           }catch(DateNotAvailableException e){
+               return null;
+           }
+
            return actualBook;
         }
 

@@ -85,6 +85,7 @@ public class Host extends User{
         }
         booksLocal.add(book);
         books.put(house, booksLocal);
+        setSuperhost();
     }
 
     public List<House> getHouses(){

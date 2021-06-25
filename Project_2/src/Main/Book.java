@@ -10,27 +10,10 @@ public class Book implements Comparable<Book> {
 
     private final UUID id;
     private ZonedDateTime checkIn;
-    private  ZonedDateTime checkOut;
+    private ZonedDateTime checkOut;
     private House house;
     private User user;
     private Feedback feedback;
-
-    /*public Book(ZonedDateTime checkIn, ZonedDateTime checkOut, House house, User user, Feedback feedback) {
-        id = UUID.randomUUID();
-        setCheckIn(checkIn);
-        setCheckOut(checkOut);
-        this.feedback = feedback;
-        setUser(user);
-        setHouse(house);
-    }
-    public Book(UUID id,ZonedDateTime checkIn, ZonedDateTime checkOut, House house, User user, Feedback feedback) {
-        this.id = id;
-        setCheckIn(checkIn);
-        setCheckOut(checkOut);
-        this.feedback = feedback;
-        setUser(user);
-        setHouse(house);
-    }*/
 
     public Book(User user, ZonedDateTime checkIn, ZonedDateTime checkOut, House house) {
         id = UUID.randomUUID();
