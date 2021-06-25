@@ -1,6 +1,7 @@
 package Main;
 
 import java.lang.reflect.InvocationTargetException;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
 
@@ -10,6 +11,8 @@ import Exception.ImpossibleException;
 import Exception.BookNotFoundException;
 import User.User;
 import User.Host;
+import Exception.InvalidPeriodException;
+import Exception.NotExistingHouseException;
 
 public class AirBnB {
     private final Set<User> allUsers;
@@ -126,7 +129,9 @@ public class AirBnB {
         if(user == null){
             throw new InvalidUserException();
         }
-        allHosts.add((Host) user);
+        if(user instanceof Host) {
+            allHosts.add((Host) user);
+        }
         return allUsers.add(user);
     }
     public boolean deleteUser(User user){
@@ -179,9 +184,26 @@ public class AirBnB {
                 for(Book b: entry){
                     if(book.equals(b)){
                         b.addFeedback(feedback);
+                        return;
                     }
                 }
             }
         }
+    }
+
+    public Book addBook(House house, User user, ZonedDateTime checkIn, ZonedDateTime checkOut) throws InvalidPeriodException, NotExistingHouseException {
+        for (Host h : allHosts) {
+            List<House> houses = h.getHouses();
+            if(houses.contains(house)){
+                for (House a : houses) {
+                    if(house.equals(a)){
+                        Book bookLocal = user.book(a, checkIn, checkOut);
+                        h.addBook(a, bookLocal);
+                        return bookLocal;
+                    }
+                }
+            }
+        }
+        throw new NotExistingHouseException();
     }
 }

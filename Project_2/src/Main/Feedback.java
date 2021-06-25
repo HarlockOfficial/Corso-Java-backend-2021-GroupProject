@@ -17,14 +17,14 @@ public class Feedback implements Comparable<Feedback>{
         id = UUID.randomUUID();
         this.title = title;
         this.text = text;
-        this.stars = stars;
+        setStars(stars);
     }
 
     public Feedback(UUID id,String title, String text, int stars) throws InvalidStarsRankingException {
        this.id = id;
        this.title = title;
        this.text = text;
-       this.stars = stars;
+       setStars(stars);
     }
 
 

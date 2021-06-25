@@ -15,7 +15,7 @@ public class Book implements Comparable<Book> {
     private User user;
     private Feedback feedback;
 
-    public Book(ZonedDateTime checkIn, ZonedDateTime checkOut, House house, User user, Feedback feedback) {
+    /*public Book(ZonedDateTime checkIn, ZonedDateTime checkOut, House house, User user, Feedback feedback) {
         id = UUID.randomUUID();
         setCheckIn(checkIn);
         setCheckOut(checkOut);
@@ -30,10 +30,11 @@ public class Book implements Comparable<Book> {
         this.feedback = feedback;
         setUser(user);
         setHouse(house);
-    }
+    }*/
 
-    public Book(ZonedDateTime checkIn, ZonedDateTime checkOut, House house) {
+    public Book(User user, ZonedDateTime checkIn, ZonedDateTime checkOut, House house) {
         id = UUID.randomUUID();
+        setUser(user);
         setCheckIn(checkIn);
         setCheckOut(checkOut);
         setHouse(house);
@@ -103,7 +104,7 @@ public class Book implements Comparable<Book> {
                 ", check out='" + checkOut + '\'' +
                 ", nome utente prenotazione ='" + user.getName() + '\'' +
                ", id utente prenotazione ='" + user.getUUID() + '\'' +
-               ", titolo feedback ='" + feedback.getTitle() + '\'' +
+               ", titolo feedback ='" + (feedback == null ? "" : feedback.getTitle()) + '\'' +
                 '}';
     }
 

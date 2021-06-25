@@ -60,10 +60,32 @@ public class Host extends User{
         this.books = books;
     }
 
-    /*public void addHouse(House house){
-        TreeSet<Book> booksLocal = new TreeSet<>();
+    public boolean addHouse(House house) {
+        if(!books.containsKey(house)){
+            TreeSet<Book> booksLocal = new TreeSet<>();
+            books.put(house, booksLocal);
+            return true;
+        }else return false;
+
+    }
+
+    public boolean removeHouse(House house){
+        if(books.containsKey(house)){
+            books.remove(house);
+            return true;
+        }
+        return false;
+
+    }
+
+    public void addBook(House house, Book book){
+        SortedSet<Book> booksLocal = new TreeSet<>();
+        if(books.containsKey(house)){
+            booksLocal = books.get(house);
+        }
+        booksLocal.add(book);
         books.put(house, booksLocal);
-    }*/
+    }
 
     public List<House> getHouses(){
         List<House> houses = new ArrayList<>(books.keySet());
@@ -74,7 +96,8 @@ public class Host extends User{
     public String toString() {
         return "Host{" +
                 "isSuperhost=" + isSuperhost +
-                ", books=" + /* @todo books */+
+                ", houses=" + books.keySet().toString() +
+                ", books=" + books.values().toString() +
                 '}';
     }
 

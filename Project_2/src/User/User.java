@@ -82,7 +82,7 @@ public class User implements Comparable<User> {
     public Book book(House house, ZonedDateTime startDate, ZonedDateTime endDate) throws InvalidPeriodException {
         if(startDate.isAfter(endDate)) throw new InvalidPeriodException();
        else {
-           Book actualBook = new Book(startDate, endDate, house);
+           Book actualBook = new Book(this, startDate, endDate, house);
            books.add(actualBook);
            return actualBook;
         }
@@ -115,7 +115,10 @@ public class User implements Comparable<User> {
 
     @Override
     public int compareTo(User u) {
-        // todo return (this.name.compareTo(u.name) && this.surname.compareTo(u.surname));
-        return 0;
+        int compare = surname.compareTo(u.surname);
+        if(compare == 0){
+            compare = name.compareTo(u.name);
+        }
+        return compare;
     }
 }
